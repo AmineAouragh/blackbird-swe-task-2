@@ -14,6 +14,7 @@ import * as validator from "email-validator";
 export default function LoginForm() {
     const [showAlert, setShowAlert] = useState(false);
     const [ emailIsValid, setEmailIsValid ] = useState(false)
+    const [ passwordIsValid, setPasswordIsValid ] = useState(false)
     const validateForm = (event) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget);
@@ -29,6 +30,16 @@ export default function LoginForm() {
             setEmailIsValid(false)
         }
 
+        const validatePassword = password => {
+            let regex = /[a-zA-Z0-9-_.*!%&#]{8,}/
+            return regex.test(password)
+        }
+
+        if (validatePassword(password)) {
+            setPasswordIsValid(true)
+        } else {
+            setPasswordIsValid(false)
+        }
 
     }
 
@@ -92,7 +103,7 @@ export default function LoginForm() {
                             margin="normal"
                             required
                             fullWidth
-                            error={!emailIsValid}
+                            error={!emailIsValid && showAlert}
                             id="email"
                             label="Email Address"
                             name="email"
@@ -103,10 +114,13 @@ export default function LoginForm() {
                             margin="normal"
                             required
                             fullWidth
+                            value=""
+                            error={!passwordIsValid && showAlert}
                             name="password"
                             label="Password"
                             type="password"
                             id="password"
+                            data-testid="password-input"
                             autoComplete="current-password"
                         />
                         <Button
