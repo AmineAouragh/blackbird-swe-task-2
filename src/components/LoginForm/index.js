@@ -107,6 +107,7 @@ export default function LoginForm() {
                             id="email"
                             label="Email Address"
                             name="email"
+                            data-testid="email-input"
                             autoComplete="email"
                             autoFocus
                         />
